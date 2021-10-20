@@ -1,0 +1,16 @@
+{
+	"name": "agile-estimate-planning-poker-server",
+	"version": "1.0.0",
+	"description": "Server codes for agile-estimate-planning-poker-server application.",
+	"main": "index.js",
+	"author": "ChivalrouS",
+	"license": "MIT",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"socket.io": "^4.3.1"
+	}
+}
