@@ -13,3 +13,9 @@ body,
 	margin-bottom: 300px;
 	margin-top: 100px;
 }
+
+.create-room-container {
+	width: 500px;
+	margin-bottom: 50px;
+	margin-top: 50px;
+}
