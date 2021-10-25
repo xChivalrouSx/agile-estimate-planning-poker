@@ -19,6 +19,7 @@ app.use(cors());
 // 	- userColor,
 // 	- isAdmin,
 //		- selectedCard,
+// 	- roomId, (No Need On Server)
 var rooms = [];
 
 io.on("connection", (socket) => {

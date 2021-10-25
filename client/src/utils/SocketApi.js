@@ -6,22 +6,17 @@ export const init = () => {
 	socket = io("http://localhost:3001", {
 		transports: ["websocket"],
 	});
-
 	socket.on("connect", () => console.log("Connected..."));
 };
 
-export const LoginUser = (user) => {
-	socket.emit("loginUser", user);
-};
-
-export const CreateRoom = (room, roomSetter) => {
-	ListenRoom(room.id, roomSetter);
+export const CreateRoom = (room, user, roomSetter) => {
 	socket.emit("createRoom", room);
+	JoinRoom(room.id, user, roomSetter);
 };
 
-export const JoinRoom = (roomId, roomSetter) => {
+export const JoinRoom = (roomId, user, roomSetter) => {
 	ListenRoom(roomId, roomSetter);
-	socket.emit("joinRoom", roomId);
+	socket.emit("joinRoom", { roomId, user });
 };
 
 export const ListenRoom = (roomId, roomSetter) => {
@@ -29,8 +24,8 @@ export const ListenRoom = (roomId, roomSetter) => {
 		roomSetter({
 			id: roomInfo.id,
 			cards: roomInfo.cards,
-			roomIssues: roomInfo.issues,
-			roomUsers: roomInfo.users,
+			issues: roomInfo.issues,
+			users: roomInfo.users,
 		});
 	});
 };

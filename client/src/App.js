@@ -2,38 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/Header";
 import Login from "./components/Login";
+import PlanningRoom from "./components/PlanningRoom";
 import WaitingRoom from "./components/WaitingRoom";
 import { setRoom, setUser } from "./redux/user/userSlice";
 import { init, JoinRoom } from "./utils/SocketApi";
 
 const App = () => {
 	const dispatch = useDispatch();
-	const [roomInfo, setRoomInfo] = useState();
-	const { hasUser, hasRoom, room, user } = useSelector((state) => state.user);
+	const { user, room } = useSelector((state) => state.user);
+	const hasUser = user.id !== "";
+	const hasRoom = user.roomId !== "";
+
+	const [userRoom, setUserRoom] = useState();
 
 	useEffect(() => {
 		init();
-		const storedUser = JSON.parse(localStorage.getItem("user"));
-		if (storedUser !== null) {
-			dispatch(setUser(storedUser));
-			if (storedUser.roomId !== "") {
-				JoinRoom(storedUser.roomId, setRoomInfo);
+		const localUser = JSON.parse(localStorage.getItem("user"));
+		if (localUser !== null) {
+			dispatch(setUser(localUser));
+
+			if (localUser.roomId !== "") {
+				JoinRoom(localUser.roomId, user, setUserRoom);
 			}
 		}
 	}, []); // eslint-disable-line
 
 	useEffect(() => {
-		if (roomInfo !== undefined) {
-			dispatch(
-				setRoom({
-					roomId: roomInfo.id,
-					roomCards: roomInfo.cards,
-					roomIssues: roomInfo.roomIssues,
-					roomUsers: roomInfo.roomUsers,
-				})
-			);
+		if (userRoom !== undefined) {
+			dispatch(setRoom(userRoom));
 		}
-	}, [roomInfo]); // eslint-disable-line
+	}, [userRoom]); // eslint-disable-line
 
 	console.log("user: ");
 	console.log(user);
@@ -44,8 +42,8 @@ const App = () => {
 		<>
 			<Header />
 			{!hasUser && <Login />}
-			{hasUser && !hasRoom && <WaitingRoom roomSetter={setRoomInfo} />}
-			{hasUser && hasRoom && <div>Room</div>}
+			{hasUser && !hasRoom && <WaitingRoom roomSetter={setUserRoom} />}
+			{hasUser && hasRoom && <PlanningRoom />}
 		</>
 	);
 };

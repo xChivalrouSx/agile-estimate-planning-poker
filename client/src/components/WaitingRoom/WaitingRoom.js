@@ -1,7 +1,8 @@
 import { useFormik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setRoom } from "../../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createRoom } from "../../redux/user/userSlice";
+import { JoinRoom } from "../../utils/SocketApi";
 import CustomButton from "../CustomElements/CustomButton";
 import CustomRadioButton from "../CustomElements/CustomRadioButton";
 import FloatingTextBox from "../CustomElements/FloatingTextBox";
@@ -12,6 +13,7 @@ const detailedCards =
 
 const WaitingRoom = ({ roomSetter }) => {
 	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.user);
 
 	const formikCreate = useFormik({
 		initialValues: {
@@ -19,12 +21,9 @@ const WaitingRoom = ({ roomSetter }) => {
 		},
 		onSubmit: () => {
 			dispatch(
-				setRoom({
+				createRoom({
+					cards: formikCreate.values.roomCards,
 					roomSetter: roomSetter,
-					isAdmin: true,
-					roomCards: formikCreate.values.roomCards,
-					roomIssues: [],
-					roomUsers: [],
 				})
 			);
 		},
@@ -35,12 +34,7 @@ const WaitingRoom = ({ roomSetter }) => {
 			roomId: "",
 		},
 		onSubmit: () => {
-			dispatch(
-				setRoom({
-					roomSetter: roomSetter,
-					roomId: formikJoin.values.roomId,
-				})
-			);
+			JoinRoom(formikJoin.values.roomId, user, roomSetter);
 		},
 	});
 
@@ -74,7 +68,6 @@ const WaitingRoom = ({ roomSetter }) => {
 					<form className="p-4" onSubmit={formikJoin.handleSubmit}>
 						<FloatingTextBox
 							name="roomId"
-							className="form-control"
 							placeHolder="Room Id"
 							value={formikJoin.values.roomId}
 							onChange={formikJoin.handleChange}
