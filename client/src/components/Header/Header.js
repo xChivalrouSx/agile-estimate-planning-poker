@@ -1,9 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserId } from "../../redux/user/userSlice";
 
 const Header = () => {
+	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.user);
 	const hasUser = user.id !== "";
+
+	const OnLogoutClick = () => {
+		localStorage.removeItem("user");
+		dispatch(setUserId(""));
+	};
 
 	return (
 		<nav className="navbar navbar-dark bg-primary">
@@ -12,17 +19,23 @@ const Header = () => {
 
 				<div className="d-flex align-items justify-content-center text-center">
 					{hasUser && (
-						<div className="card border-0">
-							<ul className="list-group list-group-flush">
-								<li className="list-group-item bg-success text-light">
-									Logged In as {user.username}.
-								</li>
-							</ul>
-						</div>
+						<>
+							<div className="card border-0">
+								<ul className="list-group list-group-flush">
+									<li className="list-group-item bg-success text-light">
+										Logged in as {user.username}.
+									</li>
+								</ul>
+							</div>
+							<button
+								type="button"
+								className="btn btn-danger d-flex ms-3"
+								onClick={OnLogoutClick}
+							>
+								Logout
+							</button>
+						</>
 					)}
-					<button type="button" className="btn btn-danger d-flex ms-3">
-						Logout
-					</button>
 				</div>
 			</div>
 		</nav>

@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Login from "./components/Login";
 import PlanningRoom from "./components/PlanningRoom";
 import WaitingRoom from "./components/WaitingRoom";
-import { setRoom, setUser } from "./redux/user/userSlice";
+import { setRoom, setUser, setUserRoomId } from "./redux/user/userSlice";
 import { init, JoinRoom } from "./utils/SocketApi";
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
 	const hasUser = user.id !== "";
 	const hasRoom = user.roomId !== "";
 
-	const [userRoom, setUserRoom] = useState();
+	const [userRoom, setUserRoom] = useState(-1);
 
 	useEffect(() => {
 		init();
@@ -28,7 +28,11 @@ const App = () => {
 	}, []); // eslint-disable-line
 
 	useEffect(() => {
-		if (userRoom !== undefined) {
+		console.log("test:");
+		console.log(userRoom);
+		if (userRoom === undefined) {
+			dispatch(setUserRoomId(""));
+		} else if (userRoom !== -1) {
 			dispatch(setRoom(userRoom));
 		}
 	}, [userRoom]); // eslint-disable-line
@@ -43,7 +47,7 @@ const App = () => {
 			<Header />
 			{!hasUser && <Login />}
 			{hasUser && !hasRoom && <WaitingRoom roomSetter={setUserRoom} />}
-			{hasUser && hasRoom && <PlanningRoom />}
+			{hasUser && hasRoom && <PlanningRoom roomSetter={setUserRoom} />}
 		</>
 	);
 };

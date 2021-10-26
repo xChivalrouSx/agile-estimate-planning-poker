@@ -1,14 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PlanningRoomInfo from "./PlanningRoomInfo";
+import RoomCards from "./RoomCards";
+import RoomInfo from "./RoomInfo";
+import RoomTable from "./RoomTable";
 
-const PlanningRoom = () => {
+const PlanningRoom = ({ roomSetter }) => {
 	const dispatch = useDispatch();
 	const { user, room } = useSelector((state) => state.user);
 
 	return (
 		<>
-			<PlanningRoomInfo roomUsers={room.users} roomId={room.id} />
+			<RoomInfo roomUsers={room.users} roomId={room.id} />
+			<RoomTable roomInfo={room} />
+			<RoomCards cardValues={room.cards} roomSetter={roomSetter} />
 		</>
 	);
 };

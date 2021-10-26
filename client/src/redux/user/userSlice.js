@@ -1,5 +1,21 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { CreateRoom } from "../../utils/SocketApi";
+import { CreateRoom, SelectCard } from "../../utils/SocketApi";
+
+const initialUser = {
+	id: "",
+	username: "",
+	userColor: "",
+	isAdmin: false,
+	selectedCard: "",
+	roomId: "",
+};
+
+const initialRoom = {
+	id: "",
+	cards: [],
+	issues: [],
+	users: [],
+};
 
 const SaveUserToLocalStorage = (user) => {
 	localStorage.setItem("user", JSON.stringify(user));
@@ -8,20 +24,8 @@ const SaveUserToLocalStorage = (user) => {
 export const userSlice = createSlice({
 	name: "user",
 	initialState: {
-		user: {
-			id: "",
-			username: "",
-			userColor: "",
-			isAdmin: false,
-			selectedCard: "",
-			roomId: "",
-		},
-		room: {
-			id: "",
-			cards: [],
-			issues: [],
-			users: [],
-		},
+		user: initialUser,
+		room: initialRoom,
 	},
 	reducers: {
 		createUser: {
@@ -46,6 +50,28 @@ export const userSlice = createSlice({
 		},
 		setUser: (state, action) => {
 			state.user = { ...action.payload };
+		},
+		setUserId: (state, action) => {
+			const userId = action.payload;
+
+			if (userId === "") {
+				state.user = { ...initialUser };
+			} else {
+				state.user.roomId = userId;
+			}
+		},
+		setUserRoomId: (state, action) => {
+			state.user = { ...state.user, roomId: action.payload };
+		},
+		setSelectedCard: (state, action) => {
+			const card = action.payload.card;
+			state.user.selectedCard = card;
+			SelectCard(
+				state.room.id,
+				state.user.id,
+				card,
+				action.payload.roomSetter
+			);
 		},
 		createRoom: {
 			reducer: (state, action) => {
@@ -79,5 +105,13 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { createUser, setUser, createRoom, setRoom } = userSlice.actions;
 export default userSlice.reducer;
+export const {
+	createUser,
+	setUser,
+	createRoom,
+	setRoom,
+	setUserRoomId,
+	setUserId,
+	setSelectedCard,
+} = userSlice.actions;

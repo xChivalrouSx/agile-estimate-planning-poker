@@ -19,6 +19,12 @@ export const JoinRoom = (roomId, user, roomSetter) => {
 	socket.emit("joinRoom", { roomId, user });
 };
 
+export const SelectCard = (roomId, userId, card, roomSetter) => {
+	console.log(roomId, " - ", userId, " - ", card);
+	ListenRoom(roomId, roomSetter);
+	socket.emit("selectCard", { roomId, userId, card });
+};
+
 export const ListenRoom = (roomId, roomSetter) => {
 	socket.on("roomInfo_" + roomId, (roomInfo) => {
 		roomSetter({
