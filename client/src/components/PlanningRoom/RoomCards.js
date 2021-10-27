@@ -5,7 +5,7 @@ import EstimateCard from "./EstimateCard";
 const RoomCards = ({ cardValues, roomSetter }) => {
 	return (
 		<>
-			<div className="container mw-100 w-100 sticky-bottom mb-5">
+			<div className="container mw-100 w-100 sticky-bottom">
 				<div className="row w-100 mw-100 mb-3 m-auto justify-content-center">
 					<div className="col d-flex justify-content-center align-items-center">
 						Pick a Card <ArrowDownCircle size="28" className="ms-2" />

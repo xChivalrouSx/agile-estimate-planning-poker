@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors());
 
 // id,
+// showCards,
 // cards, 				-> Array
 // issues,				-> Array
 //		- id
@@ -20,7 +21,23 @@ app.use(cors());
 // 	- isAdmin,
 //		- selectedCard,
 // 	- roomId, (No Need On Server)
+//		- location
 var rooms = [];
+
+const userRoomLocations = [
+	{ top: -120, left: 125 },
+	{ top: -120, left: 225 },
+	{ top: -120, left: 325 },
+	{ top: -120, left: 425 },
+	{ top: 255, left: 125 },
+	{ top: 255, left: 225 },
+	{ top: 255, left: 325 },
+	{ top: 255, left: 425 },
+	{ top: -50, left: -70 },
+	{ top: 170, left: -70 },
+	{ top: -50, left: 600 },
+	{ top: 170, left: 600 },
+];
 
 io.on("connection", (socket) => {
 	console.log("New user connected...");
@@ -47,6 +64,7 @@ io.on("connection", (socket) => {
 		if (IsRoomInList(roomId)) {
 			const roomInfo = GetRoomInfo(roomId);
 			if (!IsUserInRoom(roomInfo, user.id)) {
+				user.location = GetLocationForUser(roomInfo.users);
 				roomInfo.users.push(user);
 			}
 			io.emit("roomInfo_" + roomId, roomInfo);
@@ -96,6 +114,14 @@ io.on("connection", (socket) => {
 			io.emit("roomInfo_" + roomId, roomInfo);
 		}
 	});
+
+	socket.on("showCard", ({ roomId, showCardValue }) => {
+		if (IsRoomInList(roomId)) {
+			const roomInfo = GetRoomInfo(roomId);
+			roomInfo.showCards = showCardValue;
+			io.emit("roomInfo_" + roomId, roomInfo);
+		}
+	});
 });
 
 http.listen(3001, () => console.log("Server is up..."));
@@ -128,4 +154,14 @@ const GetUserInfo = (roomInfo, userId) => {
 	return roomInfo.users.filter((user) => {
 		return user.id === userId;
 	})[0];
+};
+
+const GetLocationForUser = (users) => {
+	const notEmptyLocations = users.map((user) => {
+		return user.location;
+	});
+	const emptyLocations = userRoomLocations.filter(
+		(x) => !notEmptyLocations.includes(x)
+	);
+	return emptyLocations[Math.floor(Math.random() * emptyLocations.length)];
 };

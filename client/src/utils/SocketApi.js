@@ -20,18 +20,24 @@ export const JoinRoom = (roomId, user, roomSetter) => {
 };
 
 export const SelectCard = (roomId, userId, card, roomSetter) => {
-	console.log(roomId, " - ", userId, " - ", card);
 	ListenRoom(roomId, roomSetter);
 	socket.emit("selectCard", { roomId, userId, card });
+};
+
+export const showCard = (roomId, showCardValue, roomSetter) => {
+	ListenRoom(roomId, roomSetter);
+	socket.emit("showCard", { roomId, showCardValue });
 };
 
 export const ListenRoom = (roomId, roomSetter) => {
 	socket.on("roomInfo_" + roomId, (roomInfo) => {
 		roomSetter({
 			id: roomInfo.id,
+			showCards: roomInfo.showCards,
 			cards: roomInfo.cards,
 			issues: roomInfo.issues,
 			users: roomInfo.users,
+			location: roomInfo.location,
 		});
 	});
 };

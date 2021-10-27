@@ -12,6 +12,7 @@ const initialUser = {
 
 const initialRoom = {
 	id: "",
+	showCards: false,
 	cards: [],
 	issues: [],
 	users: [],
@@ -90,6 +91,7 @@ export const userSlice = createSlice({
 					payload: {
 						room: {
 							id: nanoid(),
+							showCards: false,
 							cards: cards.split(", "),
 							issues: [],
 							users: [],

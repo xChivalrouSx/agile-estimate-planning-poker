@@ -28,19 +28,13 @@ const App = () => {
 	}, []); // eslint-disable-line
 
 	useEffect(() => {
-		console.log("test:");
-		console.log(userRoom);
 		if (userRoom === undefined) {
 			dispatch(setUserRoomId(""));
 		} else if (userRoom !== -1) {
+			dispatch(setUserRoomId(userRoom.id));
 			dispatch(setRoom(userRoom));
 		}
 	}, [userRoom]); // eslint-disable-line
-
-	console.log("user: ");
-	console.log(user);
-	console.log("room: ");
-	console.log(room);
 
 	return (
 		<>
