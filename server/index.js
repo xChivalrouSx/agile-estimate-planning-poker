@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
 	socket.on("joinRoom", ({ roomId, user }) => {
 		if (IsRoomInList(roomId)) {
 			const roomInfo = GetRoomInfo(roomId);
-			if (!IsUserInRoom(roomInfo, user.id)) {
+			if (user.id !== "" && !IsUserInRoom(roomInfo, user.id)) {
 				user.location = GetLocationForUser(roomInfo.users);
 				roomInfo.users.push(user);
 			}

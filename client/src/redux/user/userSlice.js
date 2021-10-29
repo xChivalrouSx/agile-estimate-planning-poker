@@ -107,6 +107,8 @@ export const userSlice = createSlice({
 		leaveRoom: (state) => {
 			state.room = { ...initialRoom };
 			state.user.roomId = "";
+			state.user.selectedCard = "";
+			state.user.isAdmin = false;
 		},
 	},
 });

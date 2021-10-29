@@ -1,5 +1,4 @@
 import React from "react";
-import { XCircleFill } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { leaveRoom } from "../../redux/user/userSlice";
 import { LeaveRoom } from "../../utils/SocketApi";
@@ -23,13 +22,13 @@ const PlanningRoomInfo = ({ roomUsers, roomId, userId }) => {
 		<div className="card text-center">
 			<div className="card-header d-flex justify-content-center align-items-center">
 				Planning Room (Created by {GetRoomOwner()}) - {roomId}
-				<XCircleFill
+				<button
+					type="button"
+					className="btn btn-danger d-flex ms-3"
 					onClick={ClickLeaveRoom}
-					style={{ cursor: "pointer" }}
-					className="ms-3"
-					size={24}
-					color="red"
-				/>
+				>
+					Leave From Room
+				</button>
 			</div>
 		</div>
 	);
