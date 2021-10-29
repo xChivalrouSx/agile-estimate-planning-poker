@@ -9,7 +9,7 @@ import { init, JoinRoom } from "./utils/SocketApi";
 
 const App = () => {
 	const dispatch = useDispatch();
-	const { user, room } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.user);
 	const hasUser = user.id !== "";
 	const hasRoom = user.roomId !== "";
 
