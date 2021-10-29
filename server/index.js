@@ -30,7 +30,6 @@ const initialRoom = {
 	cards: [],
 	issues: [],
 	users: [],
-	location: { top: 0, left: 0 },
 };
 
 const userRoomLocations = [

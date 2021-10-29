@@ -40,7 +40,6 @@ export const ListenRoom = (roomId, roomSetter) => {
 			cards: roomInfo.cards,
 			issues: roomInfo.issues,
 			users: roomInfo.users,
-			location: roomInfo.location,
 		});
 		if (roomInfo.id === "") {
 			socket.off("roomInfo_" + roomId);

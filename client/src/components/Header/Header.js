@@ -1,13 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserId } from "../../redux/user/userSlice";
+import { leaveRoom, setUserId } from "../../redux/user/userSlice";
+import { LeaveRoom } from "../../utils/SocketApi";
 
 const Header = () => {
 	const dispatch = useDispatch();
-	const { user } = useSelector((state) => state.user);
+	const { user, room } = useSelector((state) => state.user);
 	const hasUser = user.id !== "";
 
 	const OnLogoutClick = () => {
+		LeaveRoom(room.id, user.id);
+		dispatch(leaveRoom());
+
 		localStorage.removeItem("user");
 		dispatch(setUserId(""));
 	};
