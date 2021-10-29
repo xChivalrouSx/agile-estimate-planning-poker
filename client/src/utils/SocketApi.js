@@ -20,13 +20,16 @@ export const JoinRoom = (roomId, user, roomSetter) => {
 };
 
 export const SelectCard = (roomId, userId, card, roomSetter) => {
-	ListenRoom(roomId, roomSetter);
 	socket.emit("selectCard", { roomId, userId, card });
 };
 
-export const showCard = (roomId, showCardValue, roomSetter) => {
-	ListenRoom(roomId, roomSetter);
+export const ShowCard = (roomId, showCardValue, roomSetter) => {
 	socket.emit("showCard", { roomId, showCardValue });
+};
+
+export const LeaveRoom = (roomId, userId) => {
+	socket.emit("leaveRoom", { roomId, userId });
+	socket.off("roomInfo_" + roomId);
 };
 
 export const ListenRoom = (roomId, roomSetter) => {
@@ -39,5 +42,8 @@ export const ListenRoom = (roomId, roomSetter) => {
 			users: roomInfo.users,
 			location: roomInfo.location,
 		});
+		if (roomInfo.id === "") {
+			socket.off("roomInfo_" + roomId);
+		}
 	});
 };

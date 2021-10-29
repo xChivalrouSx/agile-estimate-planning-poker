@@ -1,10 +1,10 @@
 import React from "react";
-import { showCard } from "../../utils/SocketApi";
+import { ShowCard } from "../../utils/SocketApi";
 import EstimateUserCard from "./EstimateUserCard";
 
 const RoomTable = ({ roomInfo, roomSetter }) => {
 	const ChangeShowCard = () => {
-		showCard(roomInfo.id, !roomInfo.showCards, roomSetter);
+		ShowCard(roomInfo.id, !roomInfo.showCards, roomSetter);
 	};
 
 	return (

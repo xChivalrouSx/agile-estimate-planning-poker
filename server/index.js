@@ -24,6 +24,15 @@ app.use(cors());
 //		- location
 var rooms = [];
 
+const initialRoom = {
+	id: "",
+	showCards: false,
+	cards: [],
+	issues: [],
+	users: [],
+	location: { top: 0, left: 0 },
+};
+
 const userRoomLocations = [
 	{ top: -120, left: 125 },
 	{ top: -120, left: 225 },
@@ -58,6 +67,7 @@ io.on("connection", (socket) => {
 				return room.id !== roomId;
 			});
 		}
+		io.emit("roomInfo_" + roomId, initialRoom);
 	});
 
 	socket.on("joinRoom", ({ roomId, user }) => {
@@ -74,7 +84,7 @@ io.on("connection", (socket) => {
 	socket.on("leaveRoom", ({ roomId, userId }) => {
 		if (IsRoomInList(roomId)) {
 			const roomInfo = GetRoomInfo(roomId);
-			if (IsUserInRoom(roomInfo, user.id)) {
+			if (IsUserInRoom(roomInfo, userId)) {
 				roomInfo.users = roomInfo.users.filter((user) => {
 					return user.id !== userId;
 				});

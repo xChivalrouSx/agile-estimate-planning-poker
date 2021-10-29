@@ -10,7 +10,7 @@ const PlanningRoom = ({ roomSetter }) => {
 
 	return (
 		<>
-			<RoomInfo roomUsers={room.users} roomId={room.id} />
+			<RoomInfo roomUsers={room.users} roomId={room.id} userId={user.id} />
 			<RoomTable roomInfo={room} roomSetter={roomSetter} />
 			<RoomCards cardValues={room.cards} roomSetter={roomSetter} />
 		</>

@@ -16,6 +16,7 @@ const initialRoom = {
 	cards: [],
 	issues: [],
 	users: [],
+	location: { top: 0, left: 0 },
 };
 
 const SaveUserToLocalStorage = (user) => {
@@ -77,7 +78,6 @@ export const userSlice = createSlice({
 		createRoom: {
 			reducer: (state, action) => {
 				const createdRoom = action.payload.room;
-				state.room = { ...createdRoom };
 
 				state.user.roomId = createdRoom.id;
 				state.user.isAdmin = true;
@@ -104,6 +104,10 @@ export const userSlice = createSlice({
 		setRoom: (state, action) => {
 			state.room = { ...action.payload };
 		},
+		leaveRoom: (state) => {
+			state.room = { ...initialRoom };
+			state.user.roomId = "";
+		},
 	},
 });
 
@@ -116,4 +120,5 @@ export const {
 	setUserRoomId,
 	setUserId,
 	setSelectedCard,
+	leaveRoom,
 } = userSlice.actions;
