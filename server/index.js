@@ -133,7 +133,7 @@ io.on("connection", (socket) => {
 	});
 });
 
-http.listen(3001, () => console.log("Server is up..."));
+http.listen(80, () => console.log("Server is up..."));
 
 const IsRoomInList = (roomId) => {
 	return rooms.some((room) => {
