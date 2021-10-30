@@ -1,0 +1,11 @@
+{
+	"name": "agile-estimate-planning-poker",
+	"version": "1.0.0",
+	"description": "Planning poker for estimate issues",
+	"main": "index.js",
+	"scripts": {
+		"start": "cd ./server/ && npm start"
+	},
+	"author": "Mert Çakar",
+	"license": "MIT"
+}
