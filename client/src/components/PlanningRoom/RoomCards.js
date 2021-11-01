@@ -12,10 +12,17 @@ const RoomCards = ({ cardValues, roomSetter }) => {
 					</div>
 				</div>
 				<div className="row w-100 mw-100 m-auto justify-content-center">
-					{cardValues.map((item) => {
+					{cardValues.map((item, index) => {
 						return (
-							<div className="col p-0 m-0 flex-grow-0">
-								<EstimateCard value={item} roomSetter={roomSetter} />
+							<div
+								key={"div-" + index}
+								className="col p-0 m-0 flex-grow-0"
+							>
+								<EstimateCard
+									key={"card-" + index}
+									value={item}
+									roomSetter={roomSetter}
+								/>
 							</div>
 						);
 					})}

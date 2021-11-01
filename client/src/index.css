@@ -39,3 +39,10 @@ body,
 	align-items: center;
 	cursor: pointer;
 }
+
+.average-div {
+	margin-top: 10px;
+	text-align: center;
+	color: darkblue;
+	font-size: large;
+}
