@@ -27,11 +27,11 @@ You will also see any lint errors in the console.
 ### Images
 
 <p float="left">
-  <img src="./app-images/planning-poker-00.png" alt="Image - 1" width="500"/> 
-  <img src="./app-images/planning-poker-01.png" alt="Image - 2" width="500"/>
+  <img src="./app-images/planning-poker-00.png" alt="Image - 1" width="300"/> 
+  <img src="./app-images/planning-poker-01.png" alt="Image - 2" width="300"/>
 </p>
 
 <p float="left">
-  <img src="./app-images/planning-poker-02.png" alt="Image - 3" width="500"/> 
-  <img src="./app-images/planning-poker-03.png" alt="Image - 4" width="500"/>
+  <img src="./app-images/planning-poker-02.png" alt="Image - 3" width="600"/> 
+  <img src="./app-images/planning-poker-03.png" alt="Image - 4" width="600"/>
 </p>
