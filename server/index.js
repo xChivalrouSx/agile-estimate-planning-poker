@@ -2,8 +2,10 @@ const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const cors = require("cors");
+const dotenv = require('dotenv');
 
 app.use(cors());
+dotenv.config();
 
 // id,
 // showCards,
@@ -133,7 +135,7 @@ io.on("connection", (socket) => {
 	});
 });
 
-http.listen(3001, () => console.log("Server is up..."));
+http.listen(process.env.PORT, () => console.log("Server is up..."));
 
 const IsRoomInList = (roomId) => {
 	return rooms.some((room) => {
